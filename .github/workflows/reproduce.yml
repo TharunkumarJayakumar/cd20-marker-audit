@@ -1,0 +1,42 @@
+name: reproduce
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.12'
+          cache: pip
+
+      - name: Install pinned environment
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+
+      - name: Unit tests
+        run: .venv/bin/python -m pytest -q tests
+
+      - name: Regenerate tables and figures
+        run: |
+          .venv/bin/python scripts/00_dataset_provenance.py
+          .venv/bin/python scripts/01_build_atlas.py
+          .venv/bin/python scripts/02_cd20_audit.py
+
+      - name: Execute notebook
+        run: .venv/bin/jupyter nbconvert --execute --to notebook --inplace notebooks/cd20_analysis.ipynb
+
+      - name: Upload regenerated outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproduction-outputs
+          path: |
+            results/
+            figures/
+            notebooks/cd20_analysis.ipynb

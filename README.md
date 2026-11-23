@@ -109,22 +109,44 @@ with the figures and tables saved as live outputs:
 [`notebooks/cd20_analysis.ipynb`](notebooks/cd20_analysis.ipynb)
 
 ```bash
-.venv/bin/pip install jupyter
 .venv/bin/jupyter notebook
 ```
 
-Open `notebooks/cd20_analysis.ipynb` and run all cells.
+Open `notebooks/cd20_analysis.ipynb` and run all cells, or re-execute it
+non-interactively with `make notebook`.
+
+### Reproducibility checklist
+
+| Item | Where |
+|---|---|
+| Python 3.13.12 recorded | `.python-version`, CI workflow |
+| Exact package versions | `requirements.txt` |
+| Fixed seeds (0) for neighbours, Leiden and UMAP | both scripts, provenance record |
+| Dataset source and content SHA-256 | `results/dataset_provenance.json` |
+| Unit tests of the expected biology | `tests/test_audit.py` |
+| One-command rebuild | `make reproduce` |
+| Verification on every push | `.github/workflows/reproduce.yml` |
+| Saved outputs | `figures/`, `results/`, executed notebook |
+| License | MIT (`LICENSE`) |
+
+`make reproduce` creates the environment, runs the tests, regenerates every
+table and figure, and re-executes the notebook. The dataset fingerprint lets
+anyone confirm they analysed the same public matrix.
 
 ## 6. Repo structure
 
 ```
 src/immune_atlas.py       reusable functions (load, cluster, annotate, audit)
+scripts/00_dataset_provenance.py  data source, fingerprint, versions
 scripts/01_build_atlas.py unsupervised atlas — labels withheld
 scripts/02_cd20_audit.py  the marker audit and figure
+tests/test_audit.py       expected-biology and maths tests
 notebooks/cd20_analysis.ipynb  executed notebook version of the whole analysis
 figures/                  generated figures
-results/                  generated tables
+results/                  generated tables and provenance record
 requirements.txt          pinned versions
+Makefile                  `make reproduce` runs everything
+.github/workflows/        CI verification on every push
 ```
 
 The audit functions in `src/` are written to take any AnnData object, so the
