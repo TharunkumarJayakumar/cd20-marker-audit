@@ -76,11 +76,18 @@ plus basic QC distinguishes them.
 
 ## 4. Figures
 
-| Figure | What it shows |
-|---|---|
-| [`figures/01_atlas_umap.png`](figures/01_atlas_umap.png) | Unsupervised clusters and their marker-based names |
-| [`figures/02_marker_dotplot.png`](figures/02_marker_dotplot.png) | Marker evidence used to name the clusters |
-| [`figures/03_cd20_dropout.png`](figures/03_cd20_dropout.png) | The four-panel CD20 audit and its conclusion |
+**Figure 1 — Unsupervised clusters and their marker-based names.**
+
+![Unsupervised PBMC atlas](figures/01_atlas_umap.png)
+
+**Figure 2 — Marker evidence used to name the clusters.**
+
+![Marker dot plot](figures/02_marker_dotplot.png)
+
+**Figure 3 — The four-panel CD20 audit: detection rates, the sampling model,
+marker retention, and RNA content.**
+
+![CD20 audit](figures/03_cd20_dropout.png)
 
 ## 5. Reproduce
 
