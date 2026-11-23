@@ -101,12 +101,27 @@ python3 -m venv .venv
 The dataset downloads automatically through Scanpy on first use. All random
 seeds are fixed. Tables are written to `results/`.
 
+### Run it as a notebook
+
+The complete analysis is also available as an **executed Jupyter notebook**,
+with the figures and tables saved as live outputs:
+
+[`notebooks/cd20_analysis.ipynb`](notebooks/cd20_analysis.ipynb)
+
+```bash
+.venv/bin/pip install jupyter
+.venv/bin/jupyter notebook
+```
+
+Open `notebooks/cd20_analysis.ipynb` and run all cells.
+
 ## 6. Repo structure
 
 ```
 src/immune_atlas.py       reusable functions (load, cluster, annotate, audit)
 scripts/01_build_atlas.py unsupervised atlas — labels withheld
 scripts/02_cd20_audit.py  the marker audit and figure
+notebooks/cd20_analysis.ipynb  executed notebook version of the whole analysis
 figures/                  generated figures
 results/                  generated tables
 requirements.txt          pinned versions
